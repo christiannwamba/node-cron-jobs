@@ -1,0 +1,51 @@
+{
+  "zones": [
+    {
+      "id": 1,
+      "desc": "N. Page",
+      "fequency": "Tuesdays at 12pm",
+      "dayBeforeReminder": "* 19 * * Monday",
+      "morningOfReminder": "* 7 * * Tuesday"
+    },
+    {
+      "id": 2,
+      "desc": "S. Page",
+      "fequency": "Thursdays at 8am",
+      "dayBeforeReminder": "* 19 * * Wednesday",
+      "morningOfReminder": "* 7 * * Thursday"
+    },
+    {
+      "id": 3,
+      "desc": "W. Pierce",
+      "fequency": "Fridays at 9am",
+      "dayBeforeReminder": "* 19 * * Thursday",
+      "morningOfReminder": "* 7 * * Friday"
+    },
+    {
+      "id": 4,
+      "desc": "E. Pierce",
+      "fequency": "Wednesdays at 9am",
+      "dayBeforeReminder": "* 19 * * Tuesday",
+      "morningOfReminder": "* 7 * * Wednesday"
+    }
+  ],
+  "test_zones": [
+    {
+      "id": 1,
+      "desc": "N. Page",
+      "fequency": "Tuesdays at 12pm",
+      "dayBeforeReminder": "*/6 * * * * *",
+      "morningOfReminder": "*/9 * * * * *"
+    },
+    {
+      "id": 2,
+      "desc": "S. Page",
+      "fequency": "Thursdays at 8am",
+      "dayBeforeReminder": "*/16 * * * * *",
+      "morningOfReminder": "*/17 * * * * *"
+    }
+  ],
+  "current": {
+    "id": 1
+  }
+}
