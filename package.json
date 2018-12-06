@@ -8,7 +8,7 @@
     "app": "node app.js",
     "server": "./node_modules/.bin/json-server --watch db.json",
     "panel": "node panel.js",
-    "start": "concurrently \"npm run server\" \"sleep 5s && npm run app\" \"npm run panel\" "
+    "start": "concurrently \"npm run server\" \"sleep 5s && npm run app\""
   },
   "keywords": [],
   "author": "",
