@@ -141,7 +141,7 @@ fetch('http://localhost:3000/current')
         return response.json()
     })
     .then(currentZone => {
-        const current =  btns.find(button => (button.zoneMapping === currentZone));
+        const current =  btns.find(button => (button.zoneMapping === currentZone.id));
         current.output.writeSync(1);
     });
 
