@@ -4,19 +4,19 @@ var btns = [
   { 
     input: new Gpio(21, 'in',  'rising', {debounceTimeout: 10}), 
     output: new Gpio(25, 'out'),
-    state: false 
+    state: 0 
   }, { 
     input: new Gpio(20, 'in',  'rising', {debounceTimeout: 10}), 
     output: new Gpio(24, 'out'),
-    state: false 
+    state: 0 
   }, { 
     input: new Gpio(16, 'in',  'rising', {debounceTimeout: 10}), 
     output: new Gpio(23, 'out'),
-    state: false 
+    state: 0 
   }, { 
     input: new Gpio(12, 'in',  'rising', {debounceTimeout: 10}), 
     output: new Gpio(18, 'out'),
-    state: false 
+    state: 0 
   }
 ]
 
@@ -27,8 +27,9 @@ btns.forEach((button, index) => {
       console.error('There was an error', err); //output error message to console
     return;
     }
-    var state = btns[index].state;
-    button.output.writeSync(!state); //turn LED on or off depending on the button state (0 or 1)
+    var newState = btns[index].state ^ 1;
+    button.output.writeSync(newState); //turn LED on or off depending on the button state (0 or 1)
+    btns[index].state = newState;
     console.log('btn ' + index + ' pressed, state is now ' + JSON.stringify(btns[index].state));
   });
 });
