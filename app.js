@@ -145,6 +145,15 @@ fetch('http://localhost:3000/current')
         current.output.writeSync(1);
     });
 
+function unexportOnClose() { //function to run when exiting program
+    btns.forEach(button => {
+        button.output.writeSync(0);
+        button.output.unexport();
+        button.input.unexport();
+    });
+    warningLED.writeSync(0);
+    warningLED.unexport();
+}
 
 console.log('exiting...');
 
