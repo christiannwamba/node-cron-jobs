@@ -2,16 +2,16 @@ var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 var LED = new Gpio(25, 'out'); //use GPIO pin 4 as output
 var btns = [
   { 
-    input: new Gpio(21, 'in', 'both'), 
+    input: new Gpio(21, 'in',  'rising', {debounceTimeout: 10}), 
     output: new Gpio(25, 'out') 
   }, { 
-    input: new Gpio(20, 'in', 'both'), 
+    input: new Gpio(20, 'in',  'rising', {debounceTimeout: 10}), 
     output: new Gpio(24, 'out') 
   }, { 
-    input: new Gpio(16, 'in', 'both'), 
+    input: new Gpio(16, 'in',  'rising', {debounceTimeout: 10}), 
     output: new Gpio(23, 'out') 
   }, { 
-    input: new Gpio(12, 'in', 'both'), 
+    input: new Gpio(12, 'in',  'rising', {debounceTimeout: 10}), 
     output: new Gpio(18, 'out') 
   }
 ]
