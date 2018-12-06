@@ -14,7 +14,7 @@ function blinkLED() {
         warningLED.writeSync(0 && isFlashing); //set pin state to 0 (turn LED off)
     }
 }
-setInterval(blinkLED, 100); //run the blinkLED function every 250ms
+const blinker = setInterval(blinkLED, 100); //run the blinkLED function every 250ms
 
 const triggerWarning = () => {
     isFlashing = true;
@@ -146,6 +146,7 @@ fetch('http://localhost:3000/current')
     });
 
 function unexportOnClose() { //function to run when exiting program
+    clearInterval(blinker);
     btns.forEach(button => {
         button.output.writeSync(0);
         button.output.unexport();
