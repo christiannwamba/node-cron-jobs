@@ -66,11 +66,11 @@ fetch('http://localhost:3000/test_zones')
                 })
                 .then(currentZone => {
                     if(currentZone.id === zone.id) {
-                        // send email for day before reminder  
-                        triggerWarning();  
-                        console.log(zone.desc + ' day before DISPATCH');
+                        // send email for day before reminder
+                        triggerWarning();
+                        console.log('!!! ' + zone.desc + ' day before');
                     } else {
-                        console.log('cron ' + zone.id + ' day before all good');
+                        console.log('x - ' + zone.desc + ' day before');
                     }
                 })
             });
@@ -86,9 +86,9 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         triggerWarning();
-                        console.log(zone.desc + ' morning of DISPATCH');
+                        console.log('!!! ' + zone.desc + ' morning of');
                     } else {
-                        console.log('cron ' + zone.id + ' morning of all good');
+                        console.log('x - ' + zone.desc + ' morning of');
                     }
                 })
             });
