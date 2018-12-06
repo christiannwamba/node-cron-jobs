@@ -1,19 +1,39 @@
 var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 var LED = new Gpio(25, 'out'); //use GPIO pin 4 as output
-var pushButton = new Gpio(21, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
-
-pushButton.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
-  if (err) { //if an error
-    console.error('There was an error', err); //output error message to console
-  return;
+var btns = [
+  { 
+    input: new Gpio(21, 'in', 'both'), 
+    output: new Gpio(25, 'out') 
+  }, { 
+    input: new Gpio(20, 'in', 'both'), 
+    output: new Gpio(24, 'out') 
+  }, { 
+    input: new Gpio(16, 'in', 'both'), 
+    output: new Gpio(23, 'out') 
+  }, { 
+    input: new Gpio(12, 'in', 'both'), 
+    output: new Gpio(18, 'out') 
   }
-  LED.writeSync(value); //turn LED on or off depending on the button state (0 or 1)
+]
+
+
+btns.forEach(button => {
+  button.input.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
+    if (err) { //if an error
+      console.error('There was an error', err); //output error message to console
+    return;
+    }
+    button.output.writeSync(value); //turn LED on or off depending on the button state (0 or 1)
+  });
 });
 
+
 function unexportOnClose() { //function to run when exiting program
-  LED.writeSync(0); // Turn LED off
-  LED.unexport(); // Unexport LED GPIO to free resources
-  pushButton.unexport(); // Unexport Button GPIO to free resources
+  btns.forEach(button => {
+    button.output.writeSync(0); // Turn LED off
+    button.output.unexport(); // Unexport LED GPIO to free resources
+    button.input.unexport(); // Unexport Button GPIO to free resources
+  });
 };
 
 process.on('SIGINT', unexportOnClose); //function to run when user closes using ctrl+c
