@@ -3,9 +3,6 @@ let nodemailer = require("nodemailer");
 const fetch = require("node-fetch");
 var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 
-// setup test warning light/trigger
-var warningLED = new Gpio(5, 'out');
-
 
 // query parking status from d.json
 
@@ -55,6 +52,8 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         // light up warning lights
+                        var warningLED = new Gpio(5, 'out');
+
                         function blinkLED() {
                             if (warningLED.readSync() === 0) { //check the pin state, if the state is 0 (or off)
                                 warningLED.writeSync(1); //set pin state to 1 (turn LED on)
@@ -88,6 +87,8 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         // light up warning lights
+                        var warningLED = new Gpio(5, 'out');
+
                         function blinkLED() {
                             if (warningLED.readSync() === 0) { //check the pin state, if the state is 0 (or off)
                                 warningLED.writeSync(1); //set pin state to 1 (turn LED on)
