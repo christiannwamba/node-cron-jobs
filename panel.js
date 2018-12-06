@@ -27,9 +27,9 @@ btns.forEach((button, index) => {
       console.error('There was an error', err); //output error message to console
     return;
     }
-    button.output.writeSync(button.output.readSync() ^ 1); //turn LED on or off depending on the button state (0 or 1)
-    btns[index].state = button.output.readSync() ^ 1;
-    console.log('btn ' + index + ' pressed, state ' + JSON.stringify(btns[index].state));
+    var state = btns[index].state;
+    button.output.writeSync(!state); //turn LED on or off depending on the button state (0 or 1)
+    console.log('btn ' + index + ' pressed, state is now ' + JSON.stringify(btns[index].state));
   });
 });
 
