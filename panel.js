@@ -28,6 +28,7 @@ btns.forEach((button, index) => {
     return;
     }
     button.output.writeSync(button.output.readSync() ^ 1); //turn LED on or off depending on the button state (0 or 1)
+    btns[index].state = button.output.readSync() ^ 1;
     console.log('btn ' + index + ' pressed');
   });
 });
