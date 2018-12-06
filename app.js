@@ -154,6 +154,7 @@ function unexportOnClose() { //function to run when exiting program
     warningLED.writeSync(0);
     warningLED.unexport();
 }
+process.on('SIGINT', unexportOnClose); //function to run when user closes using ctrl+c
 
 console.log('exiting...');
 
