@@ -3,7 +3,7 @@ let nodemailer = require("nodemailer");
 const fetch = require("node-fetch");
 var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 
-// light up warning lights
+// setup warning lights
 var warningLED = new Gpio(5, 'out');
 var isFlashing = true;
 
@@ -23,8 +23,6 @@ const triggerWarning = () => {
     }, 2000); //stop blinking after 5 seconds 
 }   
 
-
-// query parking status from d.json
 
 var btns = [
     { 
@@ -49,8 +47,6 @@ var btns = [
       state: 0 
     }
   ];
-
-
 
 
 console.log('fetching initial data...');
@@ -126,12 +122,7 @@ btns.forEach((button, index) => {
       }
   
       activateZone(button.zoneMapping);
-      
-      // var newState = btns[index].state ^ 1;
-      // button.output.writeSync(newState);
-      // btns[index].state = newState;
-      console.log('btn ' + index + ' pressed, state is now ' + JSON.stringify(btns[index].state) + ', POSTing new current spot...');
-      fetch('http://localhost:3000/current', {
+            fetch('http://localhost:3000/current', {
           method: 'POST',
           headers: {
               'Accept': 'application/json',
@@ -144,18 +135,18 @@ btns.forEach((button, index) => {
     });
   });
 
+//setup state LED from first load
+fetch('http://localhost:3000/current')
+    .then(response => {
+        return response.json()
+    })
+    .then(currentZone => {
+        const current =  btns.find(button => (button.zoneMapping === currentZone));
+        current.output.writeSync(1);
+    });
+
 
 console.log('exiting...');
-
-function unexportOnClose() { //function to run when exiting program
-    btns.forEach(button => {
-      button.output.writeSync(0); // Turn LED off
-      button.output.unexport(); // Unexport LED GPIO to free resources
-      button.input.unexport(); // Unexport Button GPIO to free resources
-    });
-  };
-  
-  process.on('SIGINT', unexportOnClose); //function to run when user closes using ctrl+c
 
 //simulating an change to the state of current parking spot
 
