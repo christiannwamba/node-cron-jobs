@@ -14,7 +14,7 @@ function blinkLED() {
         warningLED.writeSync(0 && isFlashing); //set pin state to 0 (turn LED off)
     }
 }
-setInterval(blinkLED, 200); //run the blinkLED function every 250ms
+setInterval(blinkLED, 100); //run the blinkLED function every 250ms
 
 const triggerWarning = () => {
     isFlashing = true;
