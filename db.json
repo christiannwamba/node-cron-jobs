@@ -34,29 +34,29 @@
       "id": 1,
       "desc": "N. Page",
       "fequency": "Tuesdays at 12pm",
-      "dayBeforeReminder": "*/6 * * * * *",
-      "morningOfReminder": "*/9 * * * * *"
+      "dayBeforeReminder": "*/17 * * * * *",
+      "morningOfReminder": "*/18 * * * * *"
     },
     {
       "id": 2,
       "desc": "S. Page",
       "fequency": "Thursdays at 8am",
-      "dayBeforeReminder": "*/16 * * * * *",
-      "morningOfReminder": "*/17 * * * * *"
+      "dayBeforeReminder": "*/10 * * * * *",
+      "morningOfReminder": "*/16 * * * * *"
     },
     {
       "id": 3,
       "desc": "W. Pierce",
       "fequency": "Fridays at 9am",
-      "dayBeforeReminder": "*/5 * * * * *",
-      "morningOfReminder": "*/8 * * * * *"
+      "dayBeforeReminder": "*/10 * * * * *",
+      "morningOfReminder": "*/25 * * * * *"
     },
     {
       "id": 4,
       "desc": "E. Pierce",
       "fequency": "Wednesdays at 9am",
-      "dayBeforeReminder": "*/2 * * * * *",
-      "morningOfReminder": "*/1 * * * * *"
+      "dayBeforeReminder": "*/10 * * * * *",
+      "morningOfReminder": "*/25 * * * * *"
     }
   ],
   "current": {

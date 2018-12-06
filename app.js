@@ -30,6 +30,8 @@ var btns = [
   ];
 
 
+
+
 console.log('fetching initial data...');
 // Get all possible zones
 fetch('http://localhost:3000/test_zones')
@@ -49,6 +51,7 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         // light up warning lights
+                        triggerWarning();
                         console.log(zone.desc + ' day before DISPATCH');
                     } else {
                         console.log('cron ' + zone.id + ' day before all good');
@@ -67,6 +70,7 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         // light up warning lights
+                        triggerWarning();
                         console.log(zone.desc + ' morning of DISPATCH');
                     } else {
                         console.log('cron ' + zone.id + ' morning of all good');
@@ -79,9 +83,25 @@ fetch('http://localhost:3000/test_zones')
     });
 
 
-    
+// setup warning light/trigger
+var warningLED = new Gpio(5, 'out');
+var triggerWarning = () => {
+    var blinkInterval = setInterval(warningLED, 200); //run the blinkLED function every 250ms
+    if (LED.readSync() === 0) { //check the pin state, if the state is 0 (or off)
+    LED.writeSync(1); //set pin state to 1 (turn LED on)
+    } else {
+    LED.writeSync(0); //set pin state to 0 (turn LED off)
+    }
+    function endBlink() { //function to stop blinking
+        clearInterval(blinkInterval); // Stop blink intervals
+        LED.writeSync(0); // Turn LED off
+        LED.unexport(); // Unexport GPIO to free resources
+    }
+    setTimeout(endBlink, 2000); //stop blinking after 5 seconds
+};
 
-// handle button press
+
+// to handle button presses
 var activateZone = (zone, index) => {
     btns.forEach((button, index) => {
         if(button.zoneMapping == zone) {
