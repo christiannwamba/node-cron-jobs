@@ -1,13 +1,37 @@
 const cron = require("node-cron");
 let nodemailer = require("nodemailer");
 const fetch = require("node-fetch");
+var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 
 // query parking status from d.json
 
-const getCurrent = fetch('http://localhost:3000/current')
-    .then(response => response.json())
+var btns = [
+    { 
+      input: new Gpio(21, 'in',  'rising', {debounceTimeout: 10}), 
+      output: new Gpio(25, 'out'),
+      zoneMapping: 1,
+      state: 0 
+    }, { 
+      input: new Gpio(20, 'in',  'rising', {debounceTimeout: 10}), 
+      output: new Gpio(24, 'out'),
+      zoneMapping: 2,
+      state: 0 
+    }, { 
+      input: new Gpio(16, 'in',  'rising', {debounceTimeout: 10}), 
+      output: new Gpio(23, 'out'),
+      zoneMapping: 3,
+      state: 0 
+    }, { 
+      input: new Gpio(12, 'in',  'rising', {debounceTimeout: 10}), 
+      output: new Gpio(18, 'out'),
+      zoneMapping: 4,
+      state: 0 
+    }
+  ];
+
 
 console.log('fetching initial data...');
+// Get all possible zones
 fetch('http://localhost:3000/test_zones')
     .then(response => response.json())
     .then(zones => {
@@ -15,6 +39,7 @@ fetch('http://localhost:3000/test_zones')
         for(id in zones) {
             const zone = zones[id];
 
+            // setup cron for first reminder
             cron.schedule(zone.dayBeforeReminder, function () {
                 fetch('http://localhost:3000/current')
                 .then(response => {
@@ -31,7 +56,7 @@ fetch('http://localhost:3000/test_zones')
                 })
             });
                 
-           
+            // setup cron for last reminder
             cron.schedule(zone.morningOfReminder, function () {
                 fetch('http://localhost:3000/current')
                 .then(response => {
@@ -52,8 +77,62 @@ fetch('http://localhost:3000/test_zones')
     }).catch(err => {
         console.log(err);
     });
+
+
+    
+
+// handle button press
+var activateZone = (zone, index) => {
+    btns.forEach((button, index) => {
+        if(button.zoneMapping == zone) {
+        btns[index].state = true;
+        btns[index].output.writeSync(1);
+        } else {
+        btns[index].state = false;
+        btns[index].output.writeSync(0);
+        }
+    });
+    };
+
+// setup buttons
+btns.forEach((button, index) => {
+    button.input.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
+      if (err) { //if an error
+        console.error('There was an error', err); //output error message to console
+      return;
+      }
+  
+      activateZone(button.zoneMapping);
+      
+      // var newState = btns[index].state ^ 1;
+      // button.output.writeSync(newState);
+      // btns[index].state = newState;
+      console.log('btn ' + index + ' pressed, state is now ' + JSON.stringify(btns[index].state) + ', POSTing new current spot...');
+      fetch('http://localhost:3000/current', {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              "id": button.zoneMapping
+          })
+      })
+    });
+  });
+
+
 console.log('exiting...');
 
+function unexportOnClose() { //function to run when exiting program
+    btns.forEach(button => {
+      button.output.writeSync(0); // Turn LED off
+      button.output.unexport(); // Unexport LED GPIO to free resources
+      button.input.unexport(); // Unexport Button GPIO to free resources
+    });
+  };
+  
+  process.on('SIGINT', unexportOnClose); //function to run when user closes using ctrl+c
 
 //simulating an change to the state of current parking spot
 

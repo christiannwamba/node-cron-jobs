@@ -1,5 +1,4 @@
 var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
-var LED = new Gpio(25, 'out'); //use GPIO pin 4 as output
 const fetch = require("node-fetch");
 
 var btns = [
@@ -39,7 +38,7 @@ var activateZone = (zone, index) => {
 };
 
 
-
+// setup buttons
 btns.forEach((button, index) => {
   button.input.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
     if (err) { //if an error
