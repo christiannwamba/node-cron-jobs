@@ -26,9 +26,7 @@ var btns = [
   }
 ];
 
-var activateZone = (zone) => {
-  button.output.writeSync(newState); //turn LED on or off depending on the button state (0 or 1)
-
+var activateZone = (zone, index) => {
   btns.forEach((button, index) => {
     if(button.zoneMapping == zone) {
       btns[index].state = true;
