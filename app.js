@@ -159,29 +159,6 @@ process.on('SIGINT', unexportOnClose); //function to run when user closes using 
 
 console.log('exiting...');
 
-//simulating an change to the state of current parking spot
-
-//change the current position after a while
-// setTimeout(() => {
-//     fetch('http://localhost:3000/current', {
-//         method: 'POST',
-//         headers: {
-//             'Accept': 'application/json',
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             "id": 1,
-//             "desc": "N. Page",
-//             "fequency": "Tuesdays at 12pm",
-//             "dayBeforeReminder": "*/6 * * * * *", 
-//             "morningOfReminder": "*/9 * * * * *"
-//         })
-//     })
-// },11000);
-
-
-
-
 // create mail transporter
 
 // let transporter = nodemailer.createTransport({
