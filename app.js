@@ -16,7 +16,7 @@ function blinkLED() {
 
 var blinkInterval = setInterval(blinkLED, 200); //run the blinkLED function every 250ms
 
-setTimeout(() => { //function to stop blinking
+const warningTrigger  = setTimeout(() => { //function to stop blinking
     clearInterval(blinkInterval); // Stop blink intervals
     warningLED.writeSync(0); // Turn LED off
     warningLED.unexport(); // Unexport GPIO to free resources
@@ -71,6 +71,7 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         // light up warning lights
+                        warningTrigger();
                         console.log(zone.desc + ' day before DISPATCH');
                     } else {
                         console.log('cron ' + zone.id + ' day before all good');
@@ -89,6 +90,7 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         // light up warning lights
+                        warningTrigger();
                         console.log(zone.desc + ' morning of DISPATCH');
                     } else {
                         console.log('cron ' + zone.id + ' morning of all good');
