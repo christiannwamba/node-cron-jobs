@@ -6,6 +6,7 @@ var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 // light up warning lights
 var warningLED = new Gpio(5, 'out');
 var isFlashing = true;
+
 function blinkLED() {
     if (warningLED.readSync() === 0 && isFlashing) { //check the pin state, if the state is 0 (or off)
         warningLED.writeSync(1); //set pin state to 1 (turn LED on)
@@ -13,14 +14,14 @@ function blinkLED() {
         warningLED.writeSync(0 && isFlashing); //set pin state to 0 (turn LED off)
     }
 }
+setInterval(blinkLED, 200); //run the blinkLED function every 250ms
 
-var blinkInterval = setInterval(blinkLED, 200); //run the blinkLED function every 250ms
-
-setTimeout(() => { //function to stop blinking
-    clearInterval(blinkInterval); // Stop blink intervals
-    warningLED.writeSync(0); // Turn LED off
-    warningLED.unexport(); // Unexport GPIO to free resources
-}, 2000); //stop blinking after 5 seconds    
+const triggerWarning = () => {
+    isFlashing = true;
+    setTimeout(() => { //function to stop blinking
+        isFlashing = false
+    }, 2000); //stop blinking after 5 seconds 
+}   
 
 
 // query parking status from d.json
@@ -69,7 +70,8 @@ fetch('http://localhost:3000/test_zones')
                 })
                 .then(currentZone => {
                     if(currentZone.id === zone.id) {
-                        // send email for day before reminder    
+                        // send email for day before reminder  
+                        triggerWarning();  
                         console.log(zone.desc + ' day before DISPATCH');
                     } else {
                         console.log('cron ' + zone.id + ' day before all good');
@@ -87,6 +89,7 @@ fetch('http://localhost:3000/test_zones')
                 .then(currentZone => {
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
+                        triggerWarning();
                         console.log(zone.desc + ' morning of DISPATCH');
                     } else {
                         console.log('cron ' + zone.id + ' morning of all good');
