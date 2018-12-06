@@ -101,8 +101,6 @@ setTimeout(() => { //function to stop blinking
 }, 2000); //stop blinking after 5 seconds
 
 
-triggerWarning();
-
 // to handle button presses
 var activateZone = (zone, index) => {
     btns.forEach((button, index) => {
