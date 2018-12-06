@@ -84,14 +84,15 @@ fetch('http://localhost:3000/test_zones')
 // setup warning light/trigger
 var warningLED = new Gpio(5, 'out');
 
-var blinkInterval = setInterval(() =>{
+function blinkLED() {
     if (LED.readSync() === 0) { //check the pin state, if the state is 0 (or off)
         warningLED.writeSync(1); //set pin state to 1 (turn LED on)
     } else {
         warningLED.writeSync(0); //set pin state to 0 (turn LED off)
     }
-}, 200); //run the blinkLED function every 250ms
+}
 
+var blinkInterval = setInterval(blinkLED, 200); //run the blinkLED function every 250ms
 
 setTimeout(() => { //function to stop blinking
     clearInterval(blinkInterval); // Stop blink intervals
