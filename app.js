@@ -51,7 +51,6 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         // light up warning lights
-                        triggerWarning();
                         console.log(zone.desc + ' day before DISPATCH');
                     } else {
                         console.log('cron ' + zone.id + ' day before all good');
@@ -70,7 +69,6 @@ fetch('http://localhost:3000/test_zones')
                     if(currentZone.id === zone.id) {
                         // send email for day before reminder
                         // light up warning lights
-                        triggerWarning();
                         console.log(zone.desc + ' morning of DISPATCH');
                     } else {
                         console.log('cron ' + zone.id + ' morning of all good');
