@@ -17,13 +17,14 @@ var btns = [
 ]
 
 
-btns.forEach(button => {
+btns.forEach((button, index) => {
   button.input.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
     if (err) { //if an error
       console.error('There was an error', err); //output error message to console
     return;
     }
     button.output.writeSync(value); //turn LED on or off depending on the button state (0 or 1)
+    console.log('btn ' + index + ' pressed');
   });
 });
 
