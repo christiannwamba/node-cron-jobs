@@ -43,6 +43,20 @@
       "fequency": "Thursdays at 8am",
       "dayBeforeReminder": "*/16 * * * * *",
       "morningOfReminder": "*/17 * * * * *"
+    },
+    {
+      "id": 3,
+      "desc": "W. Pierce",
+      "fequency": "Fridays at 9am",
+      "dayBeforeReminder": "* 19 * * Thursday",
+      "morningOfReminder": "* 7 * * Friday"
+    },
+    {
+      "id": 4,
+      "desc": "E. Pierce",
+      "fequency": "Wednesdays at 9am",
+      "dayBeforeReminder": "* 19 * * Tuesday",
+      "morningOfReminder": "* 7 * * Wednesday"
     }
   ],
   "current": {
