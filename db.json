@@ -48,15 +48,15 @@
       "id": 3,
       "desc": "W. Pierce",
       "fequency": "Fridays at 9am",
-      "dayBeforeReminder": "*/6 * * * * *",
-      "morningOfReminder": "*/9 * * * * *"
+      "dayBeforeReminder": "*/5 * * * * *",
+      "morningOfReminder": "*/8 * * * * *"
     },
     {
       "id": 4,
       "desc": "E. Pierce",
       "fequency": "Wednesdays at 9am",
-      "dayBeforeReminder": "*/6 * * * * *",
-      "morningOfReminder": "*/9 * * * * *"
+      "dayBeforeReminder": "*/2 * * * * *",
+      "morningOfReminder": "*/1 * * * * *"
     }
   ],
   "current": {
