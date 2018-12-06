@@ -3,16 +3,20 @@ var LED = new Gpio(25, 'out'); //use GPIO pin 4 as output
 var btns = [
   { 
     input: new Gpio(21, 'in',  'rising', {debounceTimeout: 10}), 
-    output: new Gpio(25, 'out') 
+    output: new Gpio(25, 'out'),
+    state: false 
   }, { 
     input: new Gpio(20, 'in',  'rising', {debounceTimeout: 10}), 
-    output: new Gpio(24, 'out') 
+    output: new Gpio(24, 'out'),
+    state: false 
   }, { 
     input: new Gpio(16, 'in',  'rising', {debounceTimeout: 10}), 
-    output: new Gpio(23, 'out') 
+    output: new Gpio(23, 'out'),
+    state: false 
   }, { 
     input: new Gpio(12, 'in',  'rising', {debounceTimeout: 10}), 
-    output: new Gpio(18, 'out') 
+    output: new Gpio(18, 'out'),
+    state: false 
   }
 ]
 
@@ -23,7 +27,7 @@ btns.forEach((button, index) => {
       console.error('There was an error', err); //output error message to console
     return;
     }
-    button.output.writeSync(value); //turn LED on or off depending on the button state (0 or 1)
+    button.output.writeSync(led.readSync() ^ 1); //turn LED on or off depending on the button state (0 or 1)
     console.log('btn ' + index + ' pressed');
   });
 });
