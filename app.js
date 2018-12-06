@@ -5,7 +5,7 @@ var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 
 // light up warning lights
 var warningLED = new Gpio(5, 'out');
-var isFlashing = false;
+var isFlashing = true;
 function blinkLED() {
     if (warningLED.readSync() === 0 && isFlashing) { //check the pin state, if the state is 0 (or off)
         warningLED.writeSync(1); //set pin state to 1 (turn LED on)
